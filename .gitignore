@@ -1,0 +1,73 @@
+node_modules
+dist
+.DS_Store
+server/public
+vite.config.ts.*
+*.tar.gz
+
+# Environment files (commented out so .env can be committed)
+# .env
+# .env.*
+# !.env.example
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Upload files
+uploads/
+temp/
+tmp/
+
+# Log files
+*.log
+logs/
+
+# Cache directories
+.cache/
+.vscode/
+.idea/
+
+# OS generated files
+Thumbs.db
+Desktop.ini
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# Build artifacts
+build/
+out/
+
+# Test files
+coverage/
+.nyc_output/
+
+# Backup files
+*.backup
+*.bak
+
+# Large media files
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.webm
+*.mp3
+*.wav
+*.m4a
+*.aac
+*.flac
+
+# Docker
+.dockerignore
+
+# Replit files
+.replit
+replit.nix
+
