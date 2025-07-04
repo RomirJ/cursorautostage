@@ -1,91 +1,36 @@
-modules = ["nodejs-20", "web"]
-hidden = [".config", "package-lock.json"]
-run = "npm start"
-
-[gitHubImport]
-requiredFiles = [".replit", "package.json"]
+modules = ["nodejs-20", "web", "postgresql-16"]
+run = "npm run dev"
+hidden = [".config", ".git", "generated-icon.png", "node_modules", "dist"]
 
 [nix]
-channel = "stable-22_11"
-
-[unitTest]
-language = "nodejs"
+channel = "stable-24_05"
 
 [deployment]
-publicDir = "/"
-deploymentTarget = "cloudrun"
+deploymentTarget = "autoscale"
+build = ["npm", "run", "build"]
+run = ["npm", "run", "start"]
 
-[[ports]]
-localPort = 3000
-externalPort = 80
+[workflows]
+runButton = "Project"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Start application"
+
+[[workflows.workflow]]
+name = "Start application"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "npm run dev"
+waitForPort = 5000
 
 [[ports]]
 localPort = 5000
-externalPort = 3000
-
-[languages]
-
-[languages.javascript]
-pattern = "**/{*.js,*.jsx,*.ts,*.tsx,*.json}"
-
-[languages.javascript.languageServer]
-start = "typescript-language-server --stdio"
-
-[env]
-NODE_ENV = "development"
-PORT = "3000"
-DATABASE_URL = "postgresql://user:password@localhost:5432/contentstageengine"
-VITE_API_URL = "http://localhost:3000"
-
-[packager]
-language = "nodejs"
-
-[packager.features]
-packageSearch = true
-guessImports = true
-enabledForHosting = false
-
-[languages.typescript]
-pattern = "**/{*.ts,*.tsx}"
-syntax = "typescript"
-
-[languages.typescript.languageServer]
-start = "typescript-language-server --stdio"
-
-[debugger]
-support = true
-
-[debugger.interactive]
-transport = "localhost:0"
-startCommand = ["dap-node"]
-
-[debugger.interactive.initializeMessage]
-command = "initialize"
-type = "request"
-
-[debugger.interactive.initializeMessage.arguments]
-clientID = "replit"
-clientName = "replit.com"
-columnsStartAt1 = true
-linesStartAt1 = true
-locale = "en-us"
-pathFormat = "path"
-supportsInvalidatedEvent = true
-supportsProgressReporting = true
-supportsRunInTerminalRequest = true
-supportsVariablePaging = true
-supportsVariableType = true
-
-[debugger.interactive.launchMessage]
-command = "launch"
-type = "request"
-
-[debugger.interactive.launchMessage.arguments]
-console = "externalTerminal"
-cwd = "."
-pauseForSourceMap = false
-program = "./server/index.ts"
-request = "launch"
-sourceMaps = true
-stopOnEntry = false
-type = "node" 
+externalPort = 80 
