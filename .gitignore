@@ -67,7 +67,5 @@ coverage/
 # Docker
 .dockerignore
 
-# Replit files
-.replit
-replit.nix
+
 
